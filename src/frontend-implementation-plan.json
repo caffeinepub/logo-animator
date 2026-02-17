@@ -1,0 +1,202 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Logo Animator — offline deterministic logo generator with animated preview",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Single-page UI to enter a logo description and generate a logo with loading/error states and static preview",
+      "acceptanceCriteria": [
+        "The page contains a multiline text input labeled in English (e.g., \"Describe your company and the vibe of the logo\") and a primary action to generate a logo.",
+        "When generation is running, the UI shows a clear loading state and prevents duplicate submissions.",
+        "If generation fails, an English error message is shown with an option to retry.",
+        "After success, a static logo preview is displayed without requiring a page refresh."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the single-page layout and core UI: description multiline input, Generate action, loading/disabled state, error with Retry, and a static logo preview panel. Use shadcn-ui components (e.g., Button, Textarea, Card/Alert) to ensure consistent UI states. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/StaticLogoPreview.tsx",
+          "operation": "create",
+          "description": "Add a focused preview component that renders the generated SVG at multiple sizes (e.g., small + large) to demonstrate crisp scaling, and shows basic metadata (derived wordmark) in English. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useLogoGeneration.ts",
+          "operation": "create",
+          "description": "Create a hook that manages generate() lifecycle (idle/loading/success/error), prevents duplicate submissions while loading, and exposes retry() using the same description."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Ensure the app renders the new single-page App component and retains existing providers (React Query + InternetIdentityProvider)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Deterministic offline logo generator that produces a structured spec and renders a clean SVG with mark + derived wordmark",
+      "acceptanceCriteria": [
+        "Given the same description, the generated logo output is the same across runs (deterministic).",
+        "Logo generation does not call any external services; it runs fully in the frontend.",
+        "The generator produces an SVG logo that includes at least: a mark (icon/shape) + a wordmark text element derived from the description (e.g., extracted/guessed company name or first meaningful words).",
+        "The SVG scales crisply at different sizes (e.g., small preview and larger preview) without raster artifacts."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/logo/generator.ts",
+          "operation": "create",
+          "description": "Implement a deterministic, offline generator that converts description text into a LogoSpecification-like object (colors, shapes, style) using a seeded hash/PRNG, and derives a wordmark from the description (e.g., first meaningful words). No network calls."
+        },
+        {
+          "path": "frontend/src/logo/renderStaticSvg.ts",
+          "operation": "create",
+          "description": "Implement a pure renderer that converts the structured logo specification + wordmark into a clean, accessible SVG string/React element using vector primitives (paths/shapes/text) so it scales crisply."
+        },
+        {
+          "path": "frontend/src/utils/seededRandom.ts",
+          "operation": "create",
+          "description": "Add a small deterministic hashing + seeded PRNG utility used by the generator to guarantee stable outputs across runs for the same input."
+        },
+        {
+          "path": "frontend/src/hooks/useLogoGeneration.ts",
+          "operation": "modify",
+          "description": "Wire the generator + static SVG renderer into the generation hook so the UI receives both the structured spec and the rendered SVG (and derived wordmark) deterministically."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Animated logo preview derived from the same spec with play/pause and speed control",
+      "acceptanceCriteria": [
+        "An \"Animated preview\" area is shown after a logo is generated.",
+        "The animation can be played/paused via a control in the UI.",
+        "A speed control (e.g., slider) changes the animation timing in real time.",
+        "The animated logo uses the same colors/shapes/typography as the static SVG (no unrelated second design)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/logo/renderAnimatedSvg.ts",
+          "operation": "create",
+          "description": "Create an animated SVG renderer that uses the same logo specification (colors/shapes/wordmark) and applies subtle animations (e.g., draw-in stroke, scale/float) with timing controlled by an external duration/speed value."
+        },
+        {
+          "path": "frontend/src/components/AnimatedLogoPreview.tsx",
+          "operation": "create",
+          "description": "Add an Animated preview panel that renders the animated SVG and provides controls: Play/Pause toggle and Speed slider. Use shadcn-ui components (e.g., Button, Slider) for controls. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Show the \"Animated preview\" section after generation, wire play/pause and speed state into AnimatedLogoPreview, and ensure the animated view stays visually consistent with the static preview."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Signed-in user project persistence UI: save generated projects and list/reopen \"My logos\"",
+      "acceptanceCriteria": [
+        "When a user is authenticated, generating a logo saves a new project record in the backend.",
+        "The UI shows a \"My logos\" list for the signed-in user, displaying at least description snippet and creation time.",
+        "Selecting an item from the list restores the static and animated previews for that project.",
+        "Data returned for a user only includes that user’s saved projects."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Implement a Login/Logout button using the authorization component guidance (useInternetIdentity + React Query cache clearing on logout). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "operation": "create",
+          "description": "Add a first-login profile setup dialog (asks for name in English) that uses getCallerUserProfile/saveCallerUserProfile to avoid showing principal IDs. Use shadcn-ui Dialog/Form controls. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useCurrentUserProfile.ts",
+          "operation": "create",
+          "description": "Create a React Query hook following the authorization guidance to fetch getCallerUserProfile with proper actor dependency handling to prevent profile-setup modal flash. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useLogoProjects.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for authenticated project flows: load the signed-in user's logo projects list and save a new generated project when authenticated (using backend actor methods). Handle authorization failures with user-friendly English messaging."
+        },
+        {
+          "path": "frontend/src/components/MyLogosPanel.tsx",
+          "operation": "create",
+          "description": "Create a \"My logos\" panel that is shown only when authenticated, listing projects with description snippet + creation time, and allows selecting one to restore static + animated previews. Use shadcn-ui list/table primitives (e.g., Card, Button). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire authentication UI (LoginButton), profile setup gating (ProfileSetupDialog), and the \"My logos\" panel. On successful generation: if authenticated, trigger save to backend and update the list; when selecting a saved logo, restore previews from the saved specification."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Export generated logo as downloadable SVG and PNG rendered client-side from the SVG",
+      "acceptanceCriteria": [
+        "After generation, the UI provides a download action for SVG.",
+        "After generation, the UI provides a download action for PNG at a reasonable default size (e.g., 1024x1024) rendered from the SVG client-side.",
+        "Downloaded files open correctly in common viewers/editors (SVG in browser/vector editor; PNG in image viewer)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/utils/download.ts",
+          "operation": "create",
+          "description": "Add utilities to download text content as a file (SVG) and to convert an SVG string into a PNG via an offscreen canvas at a default size (e.g., 1024x1024), then download the resulting blob."
+        },
+        {
+          "path": "frontend/src/components/ExportButtons.tsx",
+          "operation": "create",
+          "description": "Add export UI that appears after generation with actions for Download SVG and Download PNG. Use shadcn-ui Buttons and disabled states where appropriate. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire ExportButtons into the post-generation UI state, passing the current rendered SVG string and a sensible filename derived from the wordmark."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Creative-tool oriented visual theme applied consistently across the app UI",
+      "acceptanceCriteria": [
+        "The app uses a consistent color palette, typography scale, and spacing system across input, buttons, panels, previews, and lists.",
+        "The theme is clearly creative-tool oriented (e.g., light canvas background, subtle grid/texture, bold accent color) and does not rely on default unstyled components.",
+        "All user-facing text is in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Define the global theme tokens (CSS variables used by Tailwind/shadcn), base typography, and a creative-tool canvas styling. Reference the generated background asset at frontend/public/assets/generated/app-bg.dim_1920x1080.png for the app backdrop."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Apply the theme consistently via layout structure (header/tool panels/preview canvas), ensure all labels/help/error text are English, and incorporate the generated app icon asset for branding using frontend/public/assets/generated/app-icon.dim_512x512.png."
+        },
+        {
+          "path": "frontend/public/assets/generated/app-bg.dim_1920x1080.png",
+          "operation": "create",
+          "description": "Add the generated image asset: Abstract creative-tool background pattern, subtle grid with soft shapes. Ensure it is used as a static frontend asset."
+        },
+        {
+          "path": "frontend/public/assets/generated/app-icon.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated image asset: Minimal monochrome app icon featuring a geometric mark. Ensure it is used as a static frontend asset."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Wire the generated app icon at frontend/public/assets/generated/app-icon.dim_512x512.png into the document metadata (e.g., favicon/app icon) to align with the cohesive theme."
+        }
+      ]
+    }
+  ]
+}

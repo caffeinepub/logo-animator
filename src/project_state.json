@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "App that generates a company logo from a user-provided description and displays an animated version of the logo.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Abstract creative-tool background pattern, subtle grid with soft shapes (app-bg.dim_1920x1080.png)\n- Minimal monochrome app icon featuring a geometric mark (app-icon.dim_512x512.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-single-page-ui-where-a-user-can-enter-a-company-logo-description-free-text-and-trigger-logo-generation-showing-loading-error-states-and-the-resulting-static-logo-preview",
+      "title": "Create a single-page UI where a user can enter a company logo description (free-text) and trigger logo generation, showing loading/error states and the resulting static logo preview.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-deterministic-offline-logo-design-generator-that-converts-the-user-provided-description-into-a-structured-logo-specification-and-renders-a-clean-vector-logo-svg-from-it-no-external-ai-llm-or-third-party-apis",
+      "title": "Implement a deterministic, offline logo-design generator that converts the user-provided description into a structured logo specification and renders a clean vector logo (SVG) from it (no external AI/LLM or third-party APIs).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-show-an-animated-version-of-the-generated-logo-with-user-controls-to-play-pause-and-adjust-animation-speed-the-animation-should-be-derived-from-the-same-logo-specification-and-remain-visually-consistent-with-the-static-logo",
+      "title": "Show an animated version of the generated logo, with user controls to play/pause and adjust animation speed; the animation should be derived from the same logo specification and remain visually consistent with the static logo.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-persist-generated-logo-projects-per-signed-in-user-store-the-description-generated-logo-specification-and-timestamps-provide-a-list-to-reopen-previously-generated-logos",
+      "title": "Persist generated logo projects per signed-in user: store the description, generated logo specification, and timestamps; provide a list to reopen previously generated logos.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-export-options-to-download-the-generated-logo-as-svg-and-a-raster-image-png-from-the-frontend",
+      "title": "Add export options to download the generated logo as SVG and a raster image (PNG) from the frontend.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-cohesive-visual-theme-for-the-app-ui-colors-typography-layout-with-a-distinct-style-suitable-for-a-creative-design-tool-and-use-it-consistently-across-all-screens-and-states",
+      "title": "Apply a cohesive visual theme for the app UI (colors, typography, layout) with a distinct style suitable for a creative design tool, and use it consistently across all screens and states.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Generate a logo design based on a user-provided company description",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Display an animated version of the generated logo",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Logo Animator",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

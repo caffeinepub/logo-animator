@@ -1,0 +1,136 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-single-page-ui-where-a-user-can-enter-a-company-logo-description-free-text-and-trigger-logo-generation-showing-loading-error-states-and-the-resulting-static-logo-preview",
+      "featureTitle": "Create a single-page UI where a user can enter a company logo description (free-text) and trigger logo generation, showing loading/error states and the resulting static logo preview.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/StaticLogoPreview.tsx",
+        "frontend/src/hooks/useLogoGeneration.ts",
+        "frontend/src/main.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-deterministic-offline-logo-design-generator-that-converts-the-user-provided-description-into-a-structured-logo-specification-and-renders-a-clean-vector-logo-svg-from-it-no-external-ai-llm-or-third-party-apis",
+      "featureTitle": "Implement a deterministic, offline logo-design generator that converts the user-provided description into a structured logo specification and renders a clean vector logo (SVG) from it (no external AI/LLM or third-party APIs).",
+      "files": [
+        "frontend/src/hooks/useLogoGeneration.ts",
+        "frontend/src/logo/generator.ts",
+        "frontend/src/logo/renderStaticSvg.ts",
+        "frontend/src/utils/seededRandom.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-show-an-animated-version-of-the-generated-logo-with-user-controls-to-play-pause-and-adjust-animation-speed-the-animation-should-be-derived-from-the-same-logo-specification-and-remain-visually-consistent-with-the-static-logo",
+      "featureTitle": "Show an animated version of the generated logo, with user controls to play/pause and adjust animation speed; the animation should be derived from the same logo specification and remain visually consistent with the static logo.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AnimatedLogoPreview.tsx",
+        "frontend/src/logo/renderAnimatedSvg.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-persist-generated-logo-projects-per-signed-in-user-store-the-description-generated-logo-specification-and-timestamps-provide-a-list-to-reopen-previously-generated-logos",
+      "featureTitle": "Persist generated logo projects per signed-in user: store the description, generated logo specification, and timestamps; provide a list to reopen previously generated logos.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/MyLogosPanel.tsx",
+        "frontend/src/components/auth/LoginButton.tsx",
+        "frontend/src/components/auth/ProfileSetupDialog.tsx",
+        "frontend/src/hooks/useCurrentUserProfile.ts",
+        "frontend/src/hooks/useLogoProjects.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-export-options-to-download-the-generated-logo-as-svg-and-a-raster-image-png-from-the-frontend",
+      "featureTitle": "Add export options to download the generated logo as SVG and a raster image (PNG) from the frontend.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ExportButtons.tsx",
+        "frontend/src/utils/download.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-cohesive-visual-theme-for-the-app-ui-colors-typography-layout-with-a-distinct-style-suitable-for-a-creative-design-tool-and-use-it-consistently-across-all-screens-and-states",
+      "featureTitle": "Apply a cohesive visual theme for the app UI (colors, typography, layout) with a distinct style suitable for a creative design tool, and use it consistently across all screens and states.",
+      "files": [
+        "frontend/index.html",
+        "frontend/src/App.tsx",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

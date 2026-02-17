@@ -1,0 +1,20 @@
+{
+  "frontend/src/App.tsx": "Main application component that orchestrates logo generation, authentication, profile setup, project management, and displays static/animated previews with export options in a creative-tool themed layout.",
+  "frontend/src/hooks/useLogoGeneration.ts": "Custom hook that manages the logo generation lifecycle including loading states, error handling, and retry functionality using the deterministic offline generator.",
+  "frontend/src/logo/generator.ts": "Deterministic offline logo generator that converts text descriptions into structured logo specifications using seeded random number generation and keyword detection.",
+  "frontend/src/utils/seededRandom.ts": "Seeded pseudo-random number generator utility that ensures deterministic output for the same input seed.",
+  "frontend/src/logo/renderStaticSvg.ts": "Pure function that converts a logo specification into a clean, scalable SVG string with shapes and wordmark text.",
+  "frontend/src/logo/renderAnimatedSvg.ts": "Renders an animated SVG version of the logo with staggered shape animations and configurable speed using SMIL animations.",
+  "frontend/src/components/StaticLogoPreview.tsx": "Component that displays the generated logo in multiple sizes to demonstrate crisp vector scaling with metadata.",
+  "frontend/src/components/AnimatedLogoPreview.tsx": "Component that displays the animated logo with play/pause controls and a speed slider for real-time animation adjustment.",
+  "frontend/src/components/ExportButtons.tsx": "Component providing download buttons for exporting the logo as SVG and PNG formats.",
+  "frontend/src/utils/download.ts": "Utility functions for downloading SVG files and converting SVG to PNG via canvas rendering for client-side export.",
+  "frontend/src/components/auth/LoginButton.tsx": "Authentication button component that handles Internet Identity login/logout with proper state management and query cache clearing.",
+  "frontend/src/components/auth/ProfileSetupDialog.tsx": "Modal dialog for first-time user profile setup that collects the user's name after initial login.",
+  "frontend/src/hooks/useCurrentUserProfile.ts": "React Query hooks for fetching and saving user profiles with proper actor dependency handling to prevent modal flash.",
+  "frontend/src/hooks/useLogoProjects.ts": "React Query hooks for loading saved logo projects and persisting new projects to the backend with authorization handling.",
+  "frontend/src/components/MyLogosPanel.tsx": "Component that displays a scrollable list of the authenticated user's saved logo projects with selection functionality.",
+  "frontend/src/index.css": "Global styles with OKLCH color system defining a creative-tool themed design with purple accent colors for both light and dark modes.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending the theme with custom colors, border radius, shadows, and animations for the creative-tool aesthetic.",
+  "frontend/index.html": "HTML entry point with proper metadata, favicon, and app title for the Logo Animator application."
+}

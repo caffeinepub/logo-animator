@@ -1,0 +1,134 @@
+{
+  "kind": "build_request",
+  "title": "Logo generator from description with animated preview",
+  "projectName": "Logo Animator",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a single-page UI where a user can enter a company logo description (free-text) and trigger logo generation, showing loading/error states and the resulting static logo preview.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Create an app that designs a logo for my company based on a description"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The page contains a multiline text input labeled in English (e.g., \"Describe your company and the vibe of the logo\") and a primary action to generate a logo.",
+        "When generation is running, the UI shows a clear loading state and prevents duplicate submissions.",
+        "If generation fails, an English error message is shown with an option to retry.",
+        "After success, a static logo preview is displayed without requiring a page refresh."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement a deterministic, offline logo-design generator that converts the user-provided description into a structured logo specification and renders a clean vector logo (SVG) from it (no external AI/LLM or third-party APIs).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "designs a logo for my company based on a description"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Given the same description, the generated logo output is the same across runs (deterministic).",
+        "Logo generation does not call any external services; it runs fully in the frontend.",
+        "The generator produces an SVG logo that includes at least: a mark (icon/shape) + a wordmark text element derived from the description (e.g., extracted/guessed company name or first meaningful words).",
+        "The SVG scales crisply at different sizes (e.g., small preview and larger preview) without raster artifacts."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Show an animated version of the generated logo, with user controls to play/pause and adjust animation speed; the animation should be derived from the same logo specification and remain visually consistent with the static logo.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "then shows me an animated version."
+        ]
+      },
+      "acceptanceCriteria": [
+        "An \"Animated preview\" area is shown after a logo is generated.",
+        "The animation can be played/paused via a control in the UI.",
+        "A speed control (e.g., slider) changes the animation timing in real time.",
+        "The animated logo uses the same colors/shapes/typography as the static SVG (no unrelated second design)."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Persist generated logo projects per signed-in user: store the description, generated logo specification, and timestamps; provide a list to reopen previously generated logos.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Create an app that designs a logo for my company based on a description"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When a user is authenticated, generating a logo saves a new project record in the backend.",
+        "The UI shows a \"My logos\" list for the signed-in user, displaying at least description snippet and creation time.",
+        "Selecting an item from the list restores the static and animated previews for that project.",
+        "Data returned for a user only includes that user’s saved projects."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add export options to download the generated logo as SVG and a raster image (PNG) from the frontend.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "designs a logo"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After generation, the UI provides a download action for SVG.",
+        "After generation, the UI provides a download action for PNG at a reasonable default size (e.g., 1024x1024) rendered from the SVG client-side.",
+        "Downloaded files open correctly in common viewers/editors (SVG in browser/vector editor; PNG in image viewer)."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Apply a cohesive visual theme for the app UI (colors, typography, layout) with a distinct style suitable for a creative design tool, and use it consistently across all screens and states.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The app uses a consistent color palette, typography scale, and spacing system across input, buttons, panels, previews, and lists.",
+        "The theme is clearly creative-tool oriented (e.g., light canvas background, subtle grid/texture, bold accent color) and does not rely on default unstyled components.",
+        "All user-facing text is in English."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not use external AI/LLM services or third-party logo-generation APIs; generation must be implemented within the app.",
+    "Backend must remain a single Motoko actor (no additional backend services).",
+    "Do not modify files in frontend immutablePaths (compose existing UI components instead)."
+  ],
+  "nonGoals": [
+    "Advanced professional logo editing tools (layers, bezier editing, full typography controls).",
+    "Real-time collaboration or multi-user sharing.",
+    "Third-party authentication providers other than Internet Identity."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Abstract creative-tool background pattern, subtle grid with soft shapes (app-bg.dim_1920x1080.png)",
+      "Minimal monochrome app icon featuring a geometric mark (app-icon.dim_512x512.png)"
+    ],
+    "edits": []
+  }
+}
